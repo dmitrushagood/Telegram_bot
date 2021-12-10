@@ -31,8 +31,10 @@ class CryptoConverter:
         except ValueError:
             raise APIException(f'Не удалось обработать количество {amount}')
 
-        r = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym={quote_ticker}&tsyms={base_ticker}')
-        total_base = json.loads(r.content)[keys[base]]
+        r = requests.get(f'https://api.fastforex.io/fetch-one?from={quote_ticker}&to={base_ticker}&api_key=a8c5d78b71-4bb800ad36-r3wgyn')
+
+        total_base = round(float(amount)) * float(json.loads(r.content)['result'][keys[base]])
+
 
         return total_base
 
